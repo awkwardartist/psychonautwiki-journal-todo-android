@@ -76,13 +76,7 @@ fun CheckInteractionsScreen(
         dangerousInteractions = viewModel.dangerousInteractions,
         unsafeInteractions = viewModel.unsafeInteractions,
         uncertainInteractions = viewModel.uncertainInteractions,
-        navigateToNext = navigateToNext,
-        dismissAlert = {
-            viewModel.isShowingAlert = false
-        },
-        isShowingAlert = viewModel.isShowingAlert,
-        alertInteractionType = viewModel.alertInteractionType,
-        alertText = viewModel.alertText
+        navigateToNext = navigateToNext
     )
 }
 
@@ -99,10 +93,6 @@ fun CheckInteractionsScreenPreview(@PreviewParameter(SubstanceWithCategoriesPrev
         uncertainInteractions = substanceWithCategories.substance.interactions?.uncertain
             ?: emptyList(),
         navigateToNext = {},
-        dismissAlert = {},
-        isShowingAlert = false,
-        alertInteractionType = InteractionType.DANGEROUS,
-        alertText = "Dangerous interaction with Heroin taken 4h ago"
     )
 }
 
@@ -117,10 +107,6 @@ fun CheckInteractionsScreenPreview2() {
         unsafeInteractions = emptyList(),
         uncertainInteractions = emptyList(),
         navigateToNext = {},
-        dismissAlert = {},
-        isShowingAlert = true,
-        alertInteractionType = InteractionType.DANGEROUS,
-        alertText = "Dangerous interaction with Heroin taken 4h ago."
     )
 }
 
@@ -130,10 +116,6 @@ fun CheckInteractionsScreen(
     substanceName: String,
     substanceUrl: String,
     isSearchingForInteractions: Boolean,
-    isShowingAlert: Boolean,
-    dismissAlert: () -> Unit,
-    alertInteractionType: InteractionType?,
-    alertText: String,
     dangerousInteractions: List<String>,
     unsafeInteractions: List<String>,
     uncertainInteractions: List<String>,
@@ -193,43 +175,6 @@ fun CheckInteractionsScreen(
                         InteractionExplanationButton(substanceURL = substanceUrl)
                     }
                 }
-            }
-            AnimatedVisibility(visible = isShowingAlert) {
-                AlertDialog(
-                    onDismissRequest = dismissAlert,
-                    title = {
-                        val title = when (alertInteractionType) {
-                            InteractionType.DANGEROUS -> "Dangerous interaction!"
-                            InteractionType.UNSAFE -> "Unsafe interaction"
-                            InteractionType.UNCERTAIN -> "Uncertain interaction"
-                            else -> "Interaction"
-                        }
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(
-                                imageVector = Icons.Default.Warning,
-                                contentDescription = "Warning",
-                            )
-                            Spacer(Modifier.size(ButtonDefaults.IconSpacing))
-                            Text(text = title, style = MaterialTheme.typography.titleLarge)
-                        }
-                    },
-                    text = {
-                        Text(text = alertText)
-                    },
-                    confirmButton = {
-                        Row(
-                            modifier = Modifier.padding(all = 8.dp),
-                            horizontalArrangement = Arrangement.Center
-                        ) {
-                            TextButton(
-                                modifier = Modifier.fillMaxWidth(),
-                                onClick = dismissAlert
-                            ) {
-                                Text("Dismiss")
-                            }
-                        }
-                    }
-                )
             }
         }
     }
