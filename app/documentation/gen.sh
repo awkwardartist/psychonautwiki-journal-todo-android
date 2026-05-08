@@ -4,7 +4,7 @@
 SRC='./app/src/main/java/com/isaakhanimann/journal'
 DOC='./app/documentation'
 # ollama model to generate with
-if [ -z "$USE_MODEL" ]; then USE_MODEL=smollm2; fi
+if [ -z "$USE_MODEL" ]; then USE_MODEL=qwen2.5-coder; fi
 
 REPOMIX_OUT="$DOC/repomix.xml"
 OUTPUT="$DOC/$(realpath "$1" --relative-to="$SRC").md"
