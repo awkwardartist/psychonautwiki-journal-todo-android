@@ -13,7 +13,8 @@ REPOMIX_TARGET="$(dirname "$1")"
 TARGET="$REPOMIX_TARGET/$(basename "$1")"
 PROMPT="you are a expert developer tasked to analyze this Kotlin codebase information extensively. You are to write very detailed documentation in markdown specifically for the included source file named $TARGET. DO NOT output any information but markdown documentation. "
 PROMPT+="DO NOT document things from other files unless absolutely necessary and relevant to the documentation. "
-PROMPT+="Ensure the document contains an Overview, Classes/Types, Methods/Functions, and whatever else you think is relevant."
+PROMPT+="Ensure the document contains an Overview, Classes/Types, Methods/Functions, and whatever else you think is relevant. "
+PROMPT+="If you require more context to make the documentation than I have provided you, only write the word context in all lower-case and no punctuation."
 
 at_exit() {
     # keep repomix file if this argument set
